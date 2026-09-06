@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.db
+*.db-wal
+*.db-shm
+agents/
+seed.local.json
+files/
+
+# Never commit credentials
+.env
+.env.*
+demo.local.json
+*.local.json

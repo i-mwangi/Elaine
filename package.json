@@ -1,0 +1,29 @@
+{
+  "name": "elaine",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,server \"npm run dev:web\" \"npm run dev:server\"",
+    "dev:server": "npm run dev -w @elaine/server",
+    "typecheck": "npm run check -w @elaine/protocol && npm run check -w @elaine/server && npm run check -w @elaine/runner && npm run check -w @elaine/web",
+    "check": "npm run typecheck && npm run check:core -w @elaine/server && npm run check:api -w @elaine/server && npm run check:runner -w @elaine/runner && npm run build",
+    "runner": "tsx packages/runner/src/cli.ts",
+    "dev:web": "npm run dev -w @elaine/web",
+    "build": "npm run build -w @elaine/web",
+    "seed": "npm run seed -w @elaine/server",
+    "start": "npm run build && npm run dev:server"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "tsx": "^4.23.12",
+    "typescript": "~6.0.2"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
