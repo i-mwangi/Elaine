@@ -1,0 +1,24 @@
+{
+  "name": "@elaine/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "check": "tsc --noEmit",
+    "check:core": "tsx scripts/core-check.ts",
+    "seed": "tsx src/seed.ts",
+    "check:api": "tsx scripts/api-agent-check.ts"
+  },
+  "dependencies": {
+    "@elaine/protocol": "*",
+    "@hono/node-server": "^1.14.0",
+    "hono": "^4.7.0",
+    "ws": "^8.18.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.5.14"
+  }
+}
