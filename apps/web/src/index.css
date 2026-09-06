@@ -1,0 +1,451 @@
+/* One small palette, defined once in light and once in dark. Messages are open
+   rows rather than bubbles: a course reads more like a document than a chat. */
+:root {
+  --bg: #fbfaf8;
+  --panel: #ffffff;
+  --ink: #1a1815;
+  --muted: #6b6560;
+  --line: #e4e0d9;
+  --accent: #3f5f4a;
+  --accent-ink: #ffffff;
+  --seal: #6a5a2f;
+  --seal-bg: #f7f2e2;
+  --danger: #a23b2c;
+  --radius: 8px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16151a;
+    --panel: #1d1c22;
+    --ink: #ece9e4;
+    --muted: #9b948c;
+    --line: #302e36;
+    --accent: #7fae90;
+    --accent-ink: #14211a;
+    --seal: #d9c88a;
+    --seal-bg: #2a2618;
+    --danger: #e08a7c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+h1, h2, h3 { line-height: 1.25; margin: 0 0 .4rem; }
+h1 { font-size: 1.35rem; }
+h2 { font-size: 1.1rem; }
+h3 { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 1.2rem 0 .4rem; }
+p { margin: 0 0 .6rem; }
+.muted { color: var(--muted); }
+.error { color: var(--danger); }
+.grow { flex: 1; }
+
+/* ---- Controls ---- */
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: .5rem .7rem;
+}
+button { cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+button.link { border: 0; background: none; padding: .25rem 0; color: var(--accent); text-align: left; }
+input, textarea, select { width: 100%; }
+textarea { resize: vertical; }
+label { display: block; font-size: .8rem; color: var(--muted); margin: .8rem 0 .25rem; }
+fieldset { border: 1px solid var(--line); border-radius: var(--radius); margin: .8rem 0 0; }
+legend { font-size: .8rem; color: var(--muted); }
+.checkbox { display: flex; gap: .5rem; align-items: center; margin: .2rem 0; color: var(--ink); }
+.checkbox input { width: auto; }
+.row { display: flex; gap: .5rem; justify-content: flex-end; margin-top: 1rem; }
+.split { display: grid; gap: 1.5rem; grid-template-columns: 1fr 1fr; margin-top: 1.5rem; }
+@media (max-width: 620px) { .split { grid-template-columns: 1fr; } }
+
+.badge { font-size: .7rem; padding: .1rem .45rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); margin-left: .4rem; }
+.badge.teacher { border-color: var(--accent); color: var(--accent); }
+.chip { font-size: .68rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 .35rem; margin-left: .4rem; }
+.dot { width: .5rem; height: .5rem; border-radius: 50%; display: inline-block; background: var(--muted); margin-right: .4rem; }
+.dot.online { background: #4c9a68; }
+.dot.thinking, .dot.publishing { background: #c08a2e; }
+
+/* ---- Entry screens ---- */
+
+.boot, .centred { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; width: min(34rem, 100%); }
+.centred.wide .panel { width: min(46rem, 100%); }
+.panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.tabs { display: flex; gap: .5rem; margin: 1rem 0; }
+.tabs button.active { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.token { display: block; word-break: break-all; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: .7rem; margin: .8rem 0; font-family: ui-monospace, monospace; font-size: .85rem; }
+
+.list { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .4rem; }
+.list .row-button { display: flex; width: 100%; align-items: center; text-align: left; }
+ul.plain { list-style: none; margin: 0; padding: 0; font-size: .9rem; }
+ul.plain li { padding: .15rem 0; }
+
+/* ---- Workspace ---- */
+
+.workspace { display: grid; grid-template-columns: 16rem 1fr; height: 100vh; }
+@media (max-width: 760px) { .workspace { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: auto; } }
+
+.sidebar { border-right: 1px solid var(--line); padding: 1rem; overflow-y: auto; background: var(--panel); display: flex; flex-direction: column; }
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar ul li button { display: flex; align-items: center; width: 100%; text-align: left; border: 0; background: none; padding: .3rem .4rem; border-radius: var(--radius); }
+.sidebar ul li button:hover { background: var(--bg); }
+.sidebar ul li button.active { background: var(--bg); font-weight: 600; }
+.sidebar footer { margin-top: auto; padding-top: 1rem; font-size: .8rem; display: flex; align-items: center; }
+
+main { display: flex; flex-direction: column; min-height: 0; }
+.channel-head { padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); }
+.channel-head p { margin: 0; font-size: .82rem; }
+
+.messages { flex: 1; overflow-y: auto; padding: 1rem 1.25rem; }
+.empty { flex: 1; display: grid; place-items: center; color: var(--muted); padding: 2rem; text-align: center; }
+
+.message { padding: .7rem 0; border-bottom: 1px solid var(--line); }
+.message:last-of-type { border-bottom: 0; }
+.message header { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .2rem; }
+.message header time { font-size: .75rem; color: var(--muted); }
+.message p { margin: 0 0 .35rem; white-space: pre-wrap; }
+.message pre { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: .7rem; overflow-x: auto; font-size: .85rem; }
+.message .deleted { font-style: italic; }
+.cite { color: var(--accent); text-decoration: underline dotted; text-underline-offset: 2px; }
+
+/* The seal states where an answer came from. It is deliberately quiet: the
+   answer is the thing to read, and the provenance is the footnote. */
+.seal {
+  display: inline-block;
+  margin-top: .3rem;
+  font-size: .78rem;
+  color: var(--seal);
+  background: var(--seal-bg);
+  border-radius: 999px;
+  padding: .12rem .6rem;
+}
+
+.composer { display: flex; gap: .6rem; padding: .9rem 1.25rem; border-top: 1px solid var(--line); align-items: flex-end; }
+.composer textarea { flex: 1; }
+
+.overlay { position: fixed; inset: 0; background: rgb(0 0 0 / .45); display: grid; place-items: center; padding: 1.5rem; }
+.toast { position: fixed; right: 1rem; bottom: 1rem; max-width: min(32rem, calc(100vw - 2rem)); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1rem; box-shadow: 0 8px 24px rgb(0 0 0 / .18); }
+.toast pre { white-space: pre-wrap; word-break: break-all; font-size: .82rem; margin: 0 0 .6rem; }
+
+/* An agent row carries its conversation on the left and, for a teacher, a
+   rename control on the right. The control stays quiet until the row is hovered
+   or the control itself is focused, so keyboard users never lose track of it. */
+.agent-row { display: flex; align-items: center; gap: .25rem; }
+/* JSX drops the literal space between the name and the presence word, so the
+   gap is set here rather than depending on source whitespace surviving. */
+.agent-row button.grow > .muted { margin-left: .35rem; }
+.sidebar .agent-row > button.rename {
+  flex: 0 0 auto;
+  /* The sidebar sets width:100% on every button; in a flex row that would make
+     this one claim the whole line. */
+  width: auto;
+  font-size: .72rem;
+  color: var(--muted);
+  padding: .1rem .35rem;
+  opacity: 0;
+}
+.agent-row:hover > button.rename,
+.sidebar .agent-row > button.rename:focus-visible { opacity: 1; }
+@media (hover: none) { .sidebar .agent-row > button.rename { opacity: 1; } }
+
+.rename-form { display: flex; gap: .25rem; width: 100%; align-items: center; }
+.rename-form input { flex: 1; min-width: 0; padding: .25rem .4rem; font-size: .85rem; }
+.rename-form button { flex: 0 0 auto; font-size: .72rem; padding: .2rem .4rem; }
+.error.small { font-size: .78rem; margin: .3rem 0 0; }
+
+/* A thread is a third column, not a modal: the channel stays readable while a
+   side conversation happens, which is the point of threading at all. */
+.workspace.with-thread { grid-template-columns: 16rem 1fr 22rem; }
+.thread-panel { border-left: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; }
+.thread-panel .channel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.thread-panel .messages { padding: .8rem 1rem; }
+.thread-panel .composer { padding: .8rem 1rem; }
+
+/* The reply affordance is quiet until the message is hovered, so a channel of
+   many messages is not a wall of buttons. */
+button.reply {
+  border: 0; background: none; padding: .1rem 0; margin-top: .1rem;
+  font-size: .78rem; color: var(--accent); width: auto; opacity: 0;
+}
+.message:hover button.reply, button.reply:focus-visible { opacity: 1; }
+/* A thread that already has replies always says so. */
+.message button.reply.has-replies { opacity: 1; }
+@media (hover: none) { button.reply { opacity: 1; } }
+
+@media (max-width: 1100px) {
+  .workspace.with-thread { grid-template-columns: 16rem 1fr; }
+  .thread-panel { position: fixed; inset: 0 0 0 auto; width: min(24rem, 100vw); z-index: 5; box-shadow: -8px 0 24px rgb(0 0 0 / .18); }
+}
+
+/* The editor replaces the message in place, so the surrounding conversation
+   stays where it was while you rewrite one line of it. */
+.edit-form { margin: .2rem 0 .4rem; }
+.edit-form textarea { width: 100%; }
+.edit-form .row { margin-top: .4rem; gap: .4rem; }
+.edit-form .row button { font-size: .8rem; padding: .25rem .6rem; }
+.message header .small { font-size: .72rem; }
+
+/* The confirmation sits where the control was, so it is unmistakably about
+   this message and not a floating dialog about "an item". */
+.confirm { display: inline-flex; align-items: center; gap: .4rem; margin-top: .2rem; flex-wrap: wrap; }
+.confirm button { font-size: .75rem; padding: .15rem .5rem; width: auto; }
+button.danger { border-color: var(--danger); color: var(--danger); }
+button.danger:hover:not(:disabled) { background: var(--danger); color: var(--panel); border-color: var(--danger); }
+
+/* Member rows mirror the agent rows: the row reads as a name, and the controls
+   stay out of the way until you go looking for them. */
+.member-row { display: flex; align-items: center; gap: .3rem; padding: .15rem 0; min-width: 0; }
+.member-actions { display: inline-flex; gap: .3rem; opacity: 0; }
+.member-row:hover .member-actions, .member-actions:focus-within { opacity: 1; }
+.member-actions button { border: 0; background: none; padding: 0; width: auto; font-size: .72rem; color: var(--accent); }
+@media (hover: none) { .member-actions { opacity: 1; } }
+
+/* Tallies sit under the message they belong to. One that includes you is
+   outlined, so "have I reacted?" is answerable without counting names. */
+.reactions { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; align-items: center; }
+.reactions .pill {
+  border-radius: 999px; padding: .05rem .5rem; font-size: .8rem;
+  width: auto; background: var(--bg); border: 1px solid var(--line);
+}
+.reactions .pill.mine { border-color: var(--accent); color: var(--accent); }
+.reactions .pill.add { opacity: 0; padding: .05rem .45rem; color: var(--muted); }
+.message:hover .reactions .pill.add, .reactions .pill.add:focus-visible { opacity: 1; }
+@media (hover: none) { .reactions .pill.add { opacity: 1; } }
+.palette { display: inline-flex; gap: .15rem; }
+.palette button { border-radius: 999px; padding: .05rem .35rem; width: auto; font-size: .85rem; background: var(--bg); }
+
+/* "Open to join" is a directory, not a channel list: muted, and the only thing
+   you can do with a row is join it. */
+.sidebar .agent-row > button.join {
+  flex: 0 0 auto; width: auto; font-size: .72rem; color: var(--accent); padding: .1rem .35rem;
+}
+.sidebar .agent-row > span.grow { font-size: .9rem; padding: .3rem .4rem; }
+
+/* A row is one line. The sidebar's blanket width:100% on buttons fights flex
+   sizing, so the growing item gets auto width and is allowed to shrink; without
+   min-width:0 a flex item refuses to go below its content and the label wraps. */
+.sidebar .agent-row > button.grow,
+.sidebar .agent-row > span.grow,
+.sidebar .member-row > span.grow {
+  width: auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.sidebar .agent-row { min-width: 0; }
+.sidebar .member-actions { flex: 0 0 auto; }
+
+/* opacity:0 still reserves space, so hidden actions were squeezing every name
+   into an ellipsis. They overlay the end of the row instead, on the sidebar's
+   own background, and only when the row is hovered or focused. */
+/* Every row that hosts overlaid actions must be the positioning context for
+   them. A member row that is not relative sends its absolutely positioned
+   actions to the page instead, which puts them across the screen. */
+.sidebar .agent-row,
+.sidebar .member-row { position: relative; }
+.sidebar .member-actions {
+  position: absolute;
+  white-space: nowrap;
+  right: .2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--panel);
+  padding-left: .4rem;
+  box-shadow: -6px 0 6px -4px var(--panel);
+}
+
+/* Unread is weight plus a dot, not colour alone: colour is the one signal a
+   reader may not be able to see. */
+.sidebar .agent-row > button.grow.unread { font-weight: 600; color: var(--ink); }
+.unread-dot {
+  display: inline-block; width: .4rem; height: .4rem; border-radius: 50%;
+  background: var(--accent); margin-left: .4rem; flex: 0 0 auto;
+}
+
+/* A posted file is a row you can click, not a preview: the channel stays a
+   readable transcript rather than a gallery. */
+.attachments { list-style: none; margin: .35rem 0 0; padding: 0; display: grid; gap: .2rem; }
+.attachments button.file {
+  width: auto; text-align: left; font-size: .85rem; padding: .2rem .5rem;
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.attachments button.file:hover { border-color: var(--accent); }
+
+/* Files already uploaded, waiting for the message that will carry them. */
+.pending { list-style: none; margin: 0; padding: .5rem 1.25rem 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.pending li {
+  display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: .15rem .5rem .15rem .7rem;
+}
+.pending button { border: 0; background: none; padding: 0; width: auto; font-size: .72rem; color: var(--muted); }
+.pending button:hover { color: var(--danger); }
+
+.composer .attach { display: inline-flex; align-items: center; justify-content: center; margin: 0; cursor: pointer;
+  width: 2.1rem; height: 2.1rem; border: 1px solid var(--line); border-radius: var(--radius); flex: 0 0 auto; font-size: 1.1rem; }
+.composer .attach:hover { border-color: var(--accent); }
+.composer .attach input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Held above the composer so it never moves the transcript as it appears and
+   disappears. */
+.typing { margin: 0; padding: .2rem 1.25rem 0; font-size: .8rem; color: var(--muted); font-style: italic; min-height: 1.2rem; }
+
+/* The community name is the sidebar's heading, so its rename control sits
+   beside it rather than overlaying it like the row controls do. */
+.community-name { display: flex; align-items: baseline; gap: .4rem; }
+.community-name h2 { margin: 0; }
+.sidebar .community-name > button.rename {
+  border: 0; background: none; padding: 0; width: auto;
+  font-size: .72rem; color: var(--muted); opacity: 0;
+}
+.sidebar header:hover .community-name > button.rename,
+.sidebar .community-name > button.rename:focus-visible { opacity: 1; }
+@media (hover: none) { .sidebar .community-name > button.rename { opacity: 1; } }
+
+/* A grid column is `min-width: auto` by default, so a child that cannot shrink
+   widens the column instead of overflowing inside it — which is how one inline
+   form pushed its Cancel button off-screen and gave the page a horizontal
+   scrollbar. Every column is allowed to be narrower than its content. */
+.workspace > .sidebar,
+.workspace > main,
+.workspace > .thread-panel { min-width: 0; }
+.sidebar { overflow-x: hidden; }
+
+/* The rename form wraps rather than forcing the sidebar wider: on a narrow
+   column the buttons drop under the field instead of leaving it a sliver.
+   The 8rem basis means they sit on one row whenever there is room, and the
+   explicit width undoes the sidebar's blanket `li button { width: 100% }`,
+   which would otherwise give each button a line of its own. */
+.rename-form { flex-wrap: wrap; min-width: 0; }
+.rename-form input { flex: 1 1 8rem; min-width: 0; }
+.sidebar .rename-form button { flex: 0 0 auto; width: auto; }
+
+/* ---- Narrow screens ----
+   The sidebar stops being a column and becomes a drawer over the conversation.
+   Stacking it above the messages, as the old breakpoint did, meant scrolling
+   past every channel and member to reach what you came to read. */
+.nav-toggle { display: none; }
+
+@media (max-width: 760px) {
+  .workspace,
+  .workspace.with-thread { grid-template-columns: 1fr; grid-template-rows: 1fr; height: 100vh; }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(19rem, 85vw);
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform .18s ease-out;
+    box-shadow: 2px 0 16px rgb(0 0 0 / .3);
+  }
+  .workspace.nav-open .sidebar { transform: translateX(0); }
+
+  /* A full-page button behind the drawer: tapping anywhere closes it, and it
+     is a real control so it is reachable by keyboard too. */
+  .scrim {
+    position: fixed; inset: 0; z-index: 15;
+    border: 0; border-radius: 0; padding: 0;
+    background: rgb(0 0 0 / .45);
+  }
+
+  .nav-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.2rem; height: 2.2rem; flex: 0 0 auto;
+    font-size: 1.1rem; padding: 0;
+  }
+  .channel-head { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+  .channel-head h1 { font-size: 1.1rem; }
+  .channel-head p { flex: 1 1 100%; }
+
+  /* The thread panel is already an overlay below 1100px; keep it above the
+     drawer's scrim so opening a thread is not trapped behind it. */
+  .thread-panel { z-index: 25; width: min(26rem, 100vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar { transition: none; }
+}
+
+/* On a pointer device these appear one at a time on hover, so they never
+   needed separating. On touch they are all visible at once and ran together
+   into "editdeletereply". */
+.message button.reply + button.reply,
+.message .reactions + button.reply,
+.message button.reply + .confirm { margin-left: .9rem; }
+
+/* Where there is no hover, row controls are permanently visible — so overlaying
+   them on the row's end permanently hides the name underneath ("# questi…").
+   They join the flow instead and wrap onto their own line. */
+@media (hover: none) {
+  .sidebar .member-actions {
+    position: static;
+    transform: none;
+    background: none;
+    box-shadow: none;
+    padding-left: 0;
+  }
+  .sidebar .agent-row,
+  .sidebar .member-row { flex-wrap: wrap; row-gap: .1rem; }
+  .sidebar .agent-row > button.grow,
+  .sidebar .agent-row > span.grow { flex: 1 1 100%; }
+}
+
+/* Each of these is its own action, not a sentence: "+ invite someone" and
+   "leave this community" were running together on a wide drawer. */
+.sidebar button.link { display: block; width: 100%; text-align: left; }
+
+/* ---- The card file ----
+   A card opens in the same column a thread does: reading the page an answer
+   came from is the same kind of act as reading the conversation around it. */
+.card-panel {
+  border-left: 1px solid var(--line);
+  background: var(--panel);
+  display: flex; flex-direction: column; min-height: 0; min-width: 0;
+}
+.card-panel .channel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.card-panel .channel-head h2 { margin: 0; }
+.card-body { overflow-y: auto; padding: 1rem 1.25rem 2rem; }
+.card-body h4 { margin: 1.1rem 0 .3rem; font-size: .95rem; }
+.card-body p { margin: 0 0 .7rem; }
+.card-body ul { margin: 0 0 .7rem; padding-left: 1.1rem; }
+.card-body li { margin: .15rem 0; }
+.card-body pre { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: .7rem; overflow-x: auto; font-size: .85rem; }
+
+/* The provenance, kept visually apart from the card's own words. */
+.card-meta { margin: 1.5rem 0 0; padding-top: .9rem; border-top: 1px solid var(--line); font-size: .82rem; }
+.card-meta dt { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; margin-top: .7rem; }
+.card-meta dd { margin: .15rem 0 0; }
+.card-meta code { word-break: break-all; }
+.card-meta .link { display: inline; width: auto; padding: 0; }
+
+.badge.type-topic, .badge.type-decision, .badge.type-question { border-color: var(--accent); color: var(--accent); }
+
+/* A citation is now a control, so it must not inherit button chrome. */
+button.cite {
+  border: 0; background: none; padding: 0; width: auto; font: inherit;
+  color: var(--accent); text-decoration: underline dotted; text-underline-offset: 2px;
+}
+button.cite:hover { text-decoration-style: solid; }
+.seal button.seal-card {
+  border: 0; background: none; padding: 0; width: auto; font: inherit;
+  color: inherit; text-decoration: underline dotted; text-underline-offset: 2px;
+}
