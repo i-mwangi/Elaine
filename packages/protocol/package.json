@@ -1,0 +1,16 @@
+{
+  "name": "@elaine/protocol",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check": "tsc --noEmit --strict --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ES2022 src/index.ts"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  }
+}
