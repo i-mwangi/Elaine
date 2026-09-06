@@ -1,0 +1,19 @@
+{
+  "name": "@elaine/runner",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "check:runner": "tsx scripts/runner-check.ts"
+  },
+  "dependencies": {
+    "@elaine/protocol": "*",
+    "ws": "^8.18.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.5.14"
+  }
+}
