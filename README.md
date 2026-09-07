@@ -7,9 +7,8 @@ and what the group understands once compiles into **cards**: markdown pages with
 a type, a version, sources and "replaces". They live on the filesystem, so
 there's nothing in here the group can't `ls`.
 
-Open source under **Apache-2.0**, built for **organizations that run
-cohort-based courses — bootcamps, academies, corporate training programs,
-universities**.
+Built for **organizations that run cohort-based courses — bootcamps,
+academies, corporate training programs, universities**.
 
 ## How an answer works
 
@@ -149,10 +148,6 @@ Typechecks every workspace, then runs three executable checks and the web build:
   stripping of provider keys and inherited Node options from the child.
 
 There's no unit-test framework. Each check is a script that fails loudly.
-
-## Licence
-
-Apache-2.0. See [LICENSE](LICENSE).
 
 ---
 
